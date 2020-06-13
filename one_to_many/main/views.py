@@ -6,7 +6,6 @@ def index(request):
     context = {
         'all_chefs': Chef.objects.all(),
         'all_dishes': Dish.objects.all(),
-
     }
     return render(request, 'index.html', context)
 
