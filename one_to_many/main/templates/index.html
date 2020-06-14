@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>One To Many</title>
 </head>
+
 <body>
     <h1>Add a Chef!</h1>
     <form action="/process_chef" method="post">
@@ -18,13 +20,10 @@
         <input type="submit" value="Add Chef!">
     </form>
 
-
-
     <h1>WOO HERES SOME CHEFS</h1>
     {% for chef in all_chefs %}
-        <p>{{chef.name}} - {{chef.cuisine}}</p>
-        <!-- <p>{{chef.dishes.all}}</p> -->
-
+    <p>{{chef.name}} - {{chef.cuisine}}</p>
+    <!-- <p>{{chef.dishes.all}}</p> -->
     {% endfor %}
     <hr>
     <h1>Add a Dish!</h1>
@@ -39,15 +38,32 @@
         <label for="maker">Maker:</label>
         <select name="maker" id="maker">
             {% for chef in all_chefs %}}
-                <option value="{{chef.id}}">{{chef.name}}</option>
+            <option value="{{chef.id}}">{{chef.name}}</option>
             {% endfor %}
         </select><br>
         <input type="submit" value="Add a Dish!">
-    
     </form>
     <h1>AND THE DISHES!!</h1>
     {% for dish in all_dishes %}
-        <p>{{dish.name}} - {{dish.spice}}</p>
+    <p><a href="/dish/{{dish.id}}">{{dish.name}}</a> - {{dish.spice}}</p>
     {% endfor %}
+    <hr>
+    <h1>Add a Utensil</h1>
+    <form action="/process_utensil" method="post">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name">
+        <label for="is_sharp">Sharp?</label>
+        <select name="is_sharp" id="is_sharp">
+            <option value="True">Slicey Dicey Mode</option>
+            <option value="False">Negatory, butter knife</option>
+        </select>
+        <button>Submit</button>
+        <h2>Here's the stuff from the db</h2>
+        {% for ut in all_utensils %}
+        <p><a href="/utensil/{{ut.id}}">{{ut.name}}</a> - {{ut.is_sharp}}</p>
+        {% endfor %}
+    </form>
 </body>
+
 </html>
